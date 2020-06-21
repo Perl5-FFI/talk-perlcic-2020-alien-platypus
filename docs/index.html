@@ -1,8 +1,222 @@
+<!doctype html>
 <html>
   <head>
-    <title>A Year of Alien and Platypus</title>
-  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+    <style type="text/css">
+      strong { color:orange; }
+      em { color: yellow; }
+      p code { color: cyan; }
+      sup { color: yellow; }
+    </style>
+  </head>
   <body>
-    <p>slides to eventually appear here.</p>
+    <div class="reveal">
+      <div class="slides">
+
+        <section data-markdown>
+          <textarea data-template>
+            **Alien::Build** and **FFI::Platypus** are alternative tooling for
+            Perl that fill in the missing parts from *XS* and *ExtUtils::MakeMaker*
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            In the year since the Perl Conference in Pittsburgh, **Alien::Build**
+            and **FFI::Platypus** have had some useful enhacements
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **Alien::Build** is a toolkit for making external (non-CPAN/Perl)
+            dependencies available to Perl modules
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            The **Build::Copy**<sup>*</sup> Plugin for Alien::Build for aliens without a build step
+
+            ```perl [1-6|5]
+            use alienfile;
+            ...
+            share {
+              start_url "https://github.com/...";
+              plugin 'Build::Copy';
+            }
+            ```
+
+            <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *Alien::wasmtime*
+            and *Wasm*</small>
+
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            The **Win32::Vcpkg** module and **Probe::Vcpkg** plugin makes it easy to use
+            Visual C++ Perl
+
+            ```perl [1-2|2]
+            use alienfile;
+            plugin 'Probe::Vcpkg' => 'libffi' if 
+            ```
+          
+            <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *Alien::FFI*
+            and *FFI::Platypus*</small>
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **Vcpkg** is a **cmake** based package management system for Visual C++ with a much
+            larger set of packages that what is available to Strawberry Perl
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            A number of adoptions of older broken *Alien* modules by the folks of *#native*
+            on *irc.perl.org* &#127881;
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **FFI::Platypus** is an library for writing library bindings for Perl
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **FFI::Platypus** is an easier alternative to *XS*
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **FFI::C** is an interface to C style nested data structures
+
+            ```perl [1]
+            use FFI::C;
+            ```
+
+            <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *NewFangle*
+            and *Wasm::Wasmtime*</small>
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Platypus now has an interface for **Bundling** code from other
+            languages
+
+            ```perl
+            use FFI::Platypus;
+            ```
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **FFI::Platypus::Constant** interface allows bundled code to define constants
+            in Perl space, making it easy to handle `#define` and `enum` constants.
+
+            ```perl
+            use FFI::Platypus;
+            ```
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Platypus now supports variadic functions
+
+            ```perl [1-9|4-8|9]
+            use FFI::Platypus 1.00;
+
+            my $ffi = FFI::Platypus->new( api => 1 );
+            my $printf = $ffi->function(
+              'printf' => 
+              [ 'string'] => 
+              [ 'string', 'int', 'float' ]
+            );
+            $printf->call("%s %d %g\n", "hello", 42, 3.14);
+            ```
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Platypus now has support for **pass-by-value records**
+
+            ```perl
+            use FFI::Platypus;
+            ```
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Platypus now has support for **custom records**
+
+            ```perl
+            use FFI::Platypus;
+            ```
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **Pass-by-value records** and **custom recoords** support is essential for
+            modern languages like *Go* and *Rust*
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            * New **FFI::Platypus::Lang::Go** language plugin for *Go*
+            * Improved **FFI::Platypus::Lang::Rust** language plugin for *Rust*
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Please join us to see what we can accomplish in the next year
+
+            * The *#native* chanel on *irc.perl.org*
+            * The *perlwasm* org on GitHub
+          </textarea>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
   </body>
 </html>
