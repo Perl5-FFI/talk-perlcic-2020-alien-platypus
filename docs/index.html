@@ -71,7 +71,7 @@
 
         <section data-markdown>
           <textarea data-template>
-            The **Win32::Vcpkg** module and **Probe::Vcpkg** plugin makes it easy to use
+            The **Win32::Vcpkg** module and **Probe::Vcpkg** plugin makes it easier to use
             Visual C++ Perl
 
             ```perl [1-2|2]
@@ -114,8 +114,25 @@
           <textarea data-template>
             **FFI::C** is an interface to C style nested data structures
 
-            ```perl [1]
+            ```perl [1-18|3-7|9-13|15-18]
             use FFI::C;
+
+            package ColorValue {
+              FFI::C->struct([
+                red => 'uint8', green => 'uint8', blue => 'uint8',
+              ]);
+            }
+ 
+            package NamedColor {
+              FFI::C->struct([
+                name  => 'string(22)', value => 'color_value_t',
+              ]);
+            }
+
+            my $red = NamedColor->new({
+              name => "red", 
+              value => { red => 255 }
+            });
             ```
 
             <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *NewFangle*
@@ -125,23 +142,139 @@
 
         <section data-markdown>
           <textarea data-template>
-            Platypus now has an interface for **Bundling** code from other
-            languages
+            **FFI::C** supports unions
 
-            ```perl
-            use FFI::Platypus;
+            ```perl [1-17|3-10|12-13]
+            use FFI::C;
+
+            package AnyInt {
+              FFI::C->union([
+                u32 => 'uint32',
+                u64 => 'uint64',
+                i32 => 'sint32',
+                i64 => 'sint64',
+              ]);
+            }
+
+            my $ai = AnyInt->new({ u32 => 0xffffffff });
+            say $ai->i32;  # print signed
             ```
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            **FFI::Platypus::Constant** interface allows bundled code to define constants
-            in Perl space, making it easy to handle `#define` and `enum` constants.
+            **FFI::C** makes using enumerated types (*enum*) easier
+            
+            ```perl [1-14|3-9|11|13-14]
+            use FFI::C;
 
-            ```perl
-            use FFI::Platypus;
+            package Config {
+              FFI::C->enum([
+                'default',
+                'better',
+                ['best' => 12],
+              ]);
+            }
+
+            $ffi->attach( set_config => [ 'config_t' ] );
+
+            set_config( 'better' );   # passes 1
+            set_config( 'best'   );   # passes 12
             ```
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Platypus now has an interface for **Bundling** code from other
+            languages
+
+            ```c [1-36|4-7|9-17|19-23|25-29|31-36]
+            #include "ffi_platypus_bundle.h"
+            #include "string.h"
+             
+            typedef struct {
+              char *name;
+              int value;
+            } foo_t;
+             
+            foo_t*
+            foo__new(const char *class_name, const char *name, int value)
+            {
+              (void)class_name;
+              foo_t *self = malloc( sizeof( foo_t ) );
+              self->name = strdup(name);
+              self->value = value;
+              return self;
+            }
+             
+            const char *
+            foo__name(foo_t *self)
+            {
+              return self->name;
+            }
+             
+            int
+            foo__value(foo_t *self)
+            {
+              return self->value;
+            }
+             
+            void
+            foo__DESTROY(foo_t *self)
+            {
+              free(self->name);
+              free(self);
+            }
+            ```
+
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ```perl [1-21|13|15-20]
+            package Foo;
+            use FFI::Platypus 1.00;
+
+            my $ffi = FFI::Platypus->new( api => 1 );
+             
+            $ffi->type('object(Foo)' => 'foo_t');
+            $ffi->mangler(sub {
+              my $name = shift;
+              $name =~ s/^/foo__/;
+              $name;
+            });
+             
+            $ffi->bundle;
+           
+            $ffi->attach(
+              new => [ 'string', 'string', 'int' ] => 'foo_t',
+            );
+            $ffi->attach( name =>    [ 'foo_t' ]  => 'string' );
+            $ffi->attach( value =>   [ 'foo_t' ]  => 'int'    );
+            $ffi->attach( DESTROY => [ 'foo_t' ]  => 'void'   );
+            ```
+
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Define constants from C using the bundle interface
+
+            ```c [1-10|8|9]
+            #include "ffi_platypus_bundle.h"
+
+            void
+            ffi_pl_bundle_constant(
+              const char *package,
+              ffi_platypus_constant_t *c)
+            {
+              set_str("FOO",     "BAR");
+              set_uint("ANSWER"  42);
+            }
           </textarea>
         </section>
 
@@ -167,8 +300,22 @@
           <textarea data-template>
             Platypus now has support for **pass-by-value records**
 
-            ```perl
-            use FFI::Platypus;
+            ```perl [1-15|14|15]
+            use FFI::Platypus 1.00;
+
+            my $ffi = FFI::Platypus->new( api => 1 );
+
+            package Color {
+              use FFI::Platypus::Record;
+              record_layout_1(qw(
+                uint8 red
+                uint8 green
+                uint8 blue
+              ));
+            }
+
+            $ffi->attach( set_color_value => [ 'record(Color)' ]);
+            $ffi->attach( set_color_ptr   => [ 'record(Color)*' ]);
             ```
           </textarea>
         </section>
@@ -178,7 +325,7 @@
             Platypus now has support for **custom records**
 
             ```perl
-            use FFI::Platypus;
+            use FFI::Platypus 1.00;
             ```
           </textarea>
         </section>
@@ -226,3 +373,4 @@
     </script>
   </body>
 </html>
+
