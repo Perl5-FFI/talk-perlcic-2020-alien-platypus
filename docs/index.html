@@ -82,7 +82,7 @@
             and *Wasm*</small>
 
             Note:
-            The new Build::Copy plugin for aliens that lack complicated compile and build steps, and just need
+            The Build::Copy plugin for aliens that lack complicated compile and build steps, and just need
             to copy files into their share directory.
           </textarea>
         </section>
@@ -101,7 +101,7 @@
             and *FFI::Platypus*</small>
 
              Note:
-             The new Vcpkg module and plugin make it easier to build Perl modules with
+             The Vcpkg module and plugin make it easier to build Perl modules with
              external dependencies on Visual C++ Perl
           </textarea>
         </section>
@@ -115,7 +115,7 @@
             Although Strawberry Perl is the defacto standard Perl on Windows, it is currently very bad
             at handling external dependencies.  Even with advanced Alien technology it is a
             challenge, so I think Vcpkg which provides a number of open source packages tailored
-            for the Visual C++ environment, coupled with a native Perl could give Strawberry
+            for the Visual C++ environment, coupled with a native build of Perl could give Strawberry
             a run for its money.
           </textarea>
         </section>
@@ -127,7 +127,7 @@
 
             Note:
             There has been a push among the folks on the #native channel on IRC
-            to fix and/or adopt older broken Alien modules over the past year.  So if you
+            to fix and/or adopt older broken Alien modules.  So if you
             own an Alien that is not currently working please take the time to review
             these patches, or consider contacting us on IRC for more help.
           </textarea>
@@ -139,8 +139,7 @@
 
             Note:
             Platypus is a library for writing library bindings in Perl.
-            I think it is easier to learn and use than XS,
-            unless you have to extend the perl language itself.
+            I think it is easier to learn and use than XS.
           </textarea>
         </section>
 
@@ -182,8 +181,9 @@
             and *Wasm::Wasmtime*</small>
 
             Note:
-            The new FFI::C module is for defining datatypes common in the C programming language.
-            As with this example, where we 
+            The FFI::C module is for defining datatypes common in the C programming language.
+            In particular it was difficult in the past to work with nested data with Platypus.
+            In this example
 
             1. define a color with red, green and blue values
             2. define a named color that has a name and a color value
@@ -354,12 +354,13 @@
               set_str("FOO",     "BAR");
               set_uint("ANSWER"  42);
             }
+            ```
 
             Note:
             The bundle interface also has entry points to make it easy to define
 
             1. string
-            2. and integer constants
+            2. and integer constants for Perl from C
           </textarea>
         </section>
 
@@ -455,7 +456,7 @@
             New Tech Built with **Alien** and **Platypus**:
 
             Note:
-            With all these new toys we've built some cool things with Alien and Platypus
+            With all these new toys, we've built some cool things with Alien and Platypus
           </textarea>
         </section>
 
@@ -465,8 +466,9 @@
             into *WebAssembly* from Perl
 
             Note:
-            Like the wasmtime bindings for calling Wasm from Perl.  If you missed the talk
-            that I gave about this project earlier in the week, you can check it out on YouTube.
+            Like the wasmtime bindings for calling WebAssembly from Perl.  If you missed the talk
+            that I gave about this project earlier in the week, you can check it out on the
+            Perl Conference YouTube channel.
           </textarea>
         </section>
 
@@ -477,8 +479,9 @@
             no longer supported `NewRelic::Agent` and `NewRelic::Agent::FFI`
 
             Note:
-            We also have new bindings for NewRelic.  This is exciting for NewRelic users in Perl
-            as the exiting bindings use a library which is no longer supported by NewRelic.
+            We also have new bindings for NewRelic, which I decided to name NewFangle.
+            This is exciting for NewRelic users in Perl
+            as the existing bindings use a library which is no longer supported by NewRelic.
           </textarea>
         </section>
 
@@ -533,11 +536,11 @@
             Please join us to see what we can accomplish in the next year
 
             * The *#native* chanel on *irc.perl.org*
-            * The *perlwasm* organization on GitHub
+            * The *Perl5-FFI* and *Perl5-Alien* organization on GitHub
 
             Note:
             If you are interested in Alien and Platypus tech, please join us on the #native channel on IRC
-            or the perlwasm org on GitHub
+            or the appropriate project orgs on GitHub
           </textarea>
         </section>
 
