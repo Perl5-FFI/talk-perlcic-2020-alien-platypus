@@ -26,35 +26,50 @@
         <section data-markdown>
           <textarea data-template>
             A Year of **Alien** and **Platypus**
+
+            Note:
+            Today I would like to talk to you about the
+            Alien and Platypus projects...
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            **Alien::Build** and **FFI::Platypus** are alternative tooling for
-            Perl that fill in the missing parts from *XS* and *ExtUtils::MakeMaker*
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            In the year since the Perl Conference in Pittsburgh, **Alien::Build**
+            In the year since *The Perl Conference in Pittsburgh*, **Alien::Build**
             and **FFI::Platypus** have had some useful enhacements
+
+            Note:
+            ...and what we've accomplished in the past year since the last
+            Perl Conference.
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            **Alien::Build** is a toolkit for making external (non-CPAN/Perl)
-            dependencies available to Perl modules
+            **Alien::Build** is a toolkit for defining external
+            dependencies, and making them available for CPAN
+
+            Note:
+            For those of you who are not aware, Alien::Build is a toolkit
+            for defining external (non-CPAN) dependencies and making them
+            available for CPAN and your local Perl code.
           </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            New **Alien** Tech:
+
+            Note:
+            New Alien tech includes:
+          </textarea data-template>
         </section>
 
         <section data-markdown>
           <textarea data-template>
             The **Build::Copy**<sup>*</sup> Plugin for Alien::Build for aliens without a build step
 
-            ```perl [1-6|5]
+            ```perl [5]
             use alienfile;
             ...
             share {
@@ -66,6 +81,9 @@
             <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *Alien::wasmtime*
             and *Wasm*</small>
 
+            Note:
+            The new Build::Copy plugin for aliens that lack complicated compile and build steps, and just need
+            to copy files into their share directory.
           </textarea>
         </section>
 
@@ -74,20 +92,31 @@
             The **Win32::Vcpkg** module and **Probe::Vcpkg** plugin makes it easier to use
             Visual C++ Perl
 
-            ```perl [1-2|2]
+            ```perl [2]
             use alienfile;
             plugin 'Probe::Vcpkg' => 'libffi' if 
             ```
           
             <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *Alien::FFI*
             and *FFI::Platypus*</small>
+
+             Note:
+             The new Vcpkg module and plugin make it easier to build Perl modules with
+             external dependencies on Visual C++ Perl
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
             **Vcpkg** is a **cmake** based package management system for Visual C++ with a much
-            larger set of packages that what is available to Strawberry Perl
+            larger set of open source packages that what is available to Strawberry Perl
+
+            Note:
+            Although Strawberry Perl is the defacto standard Perl on Windows, it is currently very bad
+            at handling external dependencies.  Even with advanced Alien technology it is a
+            challenge, so I think Vcpkg which provides a number of open source packages tailored
+            for the Visual C++ environment, coupled with a native Perl could give Strawberry
+            a run for its money.
           </textarea>
         </section>
 
@@ -95,19 +124,33 @@
           <textarea data-template>
             A number of adoptions of older broken *Alien* modules by the folks of *#native*
             on *irc.perl.org* &#127881;
+
+            Note:
+            There has been a push among the folks on the #native channel on IRC
+            to fix and/or adopt older broken Alien modules over the past year.  So if you
+            own an Alien that is not currently working please take the time to review
+            these patches, or consider contacting us on IRC for more help.
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            **FFI::Platypus** is an library for writing library bindings for Perl
+            **FFI::Platypus** is for writing library bindings for Perl
+
+            Note:
+            Platypus is a library for writing library bindings in Perl.
+            I think it is easier to learn and use than XS,
+            unless you have to extend the perl language itself.
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            **FFI::Platypus** is an easier alternative to *XS*
-          </textarea>
+            New **Platypus** Tech:
+
+            Note:
+            New Platypus tech includes:
+          </textarea data-template>
         </section>
 
         <section data-markdown>
@@ -137,6 +180,14 @@
 
             <small style="margin-left: 60%; margin-top: 50px;"><sup>*</sup>Used by *NewFangle*
             and *Wasm::Wasmtime*</small>
+
+            Note:
+            The new FFI::C module is for defining datatypes common in the C programming language.
+            As with this example, where we 
+
+            1. define a color with red, green and blue values
+            2. define a named color that has a name and a color value
+            3. and now we can create an instance of that named color.
           </textarea>
         </section>
 
@@ -159,6 +210,12 @@
             my $ai = AnyInt->new({ u32 => 0xffffffff });
             say $ai->i32;  # print signed
             ```
+
+            Note:
+            You can also
+
+            1. define
+            2. and use unions.
           </textarea>
         </section>
 
@@ -182,6 +239,13 @@
             set_config( 'better' );   # passes 1
             set_config( 'best'   );   # passes 12
             ```
+
+            Note:
+            It also makes it easy to work with enumerated types by allowing you to
+
+            1. define an enum
+            2. define a function that takes an enum
+            3. and then by calling that function and having the strings automatically translated into their integer values
           </textarea>
         </section>
 
@@ -229,6 +293,16 @@
             }
             ```
 
+
+            Note:
+            Platypus now has an interface to make it easy to bundle code from other languages.
+            In this example we
+
+            1. define a struct to represent a class
+            2. write a constructor for that class
+            3. along with
+            4. some methods
+            5. and a destructor
           </textarea>
         </section>
 
@@ -257,6 +331,11 @@
             $ffi->attach( DESTROY => [ 'foo_t' ]  => 'void'   );
             ```
 
+            Note:
+            Now we can bind this interface to Perl by
+
+            1. calling the bundle method which tells Platypus to use the C code that came with this dist
+            2. and defining the methods so they can be used in Perl.
           </textarea>
         </section>
 
@@ -275,6 +354,12 @@
               set_str("FOO",     "BAR");
               set_uint("ANSWER"  42);
             }
+
+            Note:
+            The bundle interface also has entry points to make it easy to define
+
+            1. string
+            2. and integer constants
           </textarea>
         </section>
 
@@ -293,6 +378,12 @@
             );
             $printf->call("%s %d %g\n", "hello", 42, 3.14);
             ```
+
+            Note:
+            Although not frequently used, Platypus now supports variadic functions like printf
+
+            1. You can define a function using fixed and variable argument types
+            2. and call it.
           </textarea>
         </section>
 
@@ -317,23 +408,33 @@
             $ffi->attach( set_color_value => [ 'record(Color)' ]);
             $ffi->attach( set_color_ptr   => [ 'record(Color)*' ]);
             ```
+
+            Note:
+            Platypus now supports passing records by value
+
+            1. this is the default when using version 1.
+            2. If you need to pass a record by reference you can append a star to indicate a pointer.
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            Platypus now has support for **custom records**
-
-            ```perl
-            use FFI::Platypus 1.00;
-            ```
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            **Pass-by-value records** and **custom recoords** support is essential for
+            **Pass-by-value records** support is essential for
             modern languages like *Go* and *Rust*
+
+            Note:
+            Pass-by-value records are esenital for modern languages like Go and Rust...
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            (these languages typically store strings as a pointer/integer pair,
+            which are passed by value)
+
+            Note:
+            ...since these languages typically store strings as pointer/integer pairs,
+            which are passed by value.
           </textarea>
         </section>
 
@@ -341,6 +442,89 @@
           <textarea data-template>
             * New **FFI::Platypus::Lang::Go** language plugin for *Go*
             * Improved **FFI::Platypus::Lang::Rust** language plugin for *Rust*
+
+            Note:
+            So another new thing we have is a new language plugin to make calling Go code easier,
+            and an improved Rust language plugin to make calling Rust code easier.
+          </textarea>
+        </section>
+
+
+        <section data-markdown>
+          <textarea data-template>
+            New Tech Built with **Alien** and **Platypus**:
+
+            Note:
+            With all these new toys we've built some cool things with Alien and Platypus
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            **Wasm::Wasmtime**: bindings to the rust *Wasmtime* library for calling
+            into *WebAssembly* from Perl
+
+            Note:
+            Like the wasmtime bindings for calling Wasm from Perl.  If you missed the talk
+            that I gave about this project earlier in the week, you can check it out on YouTube.
+          </textarea>
+        </section>
+
+
+        <section data-markdown>
+          <textarea data-template>
+            **NewFangle**: bindings to the *libnewrelic* library to replace the
+            no longer supported `NewRelic::Agent` and `NewRelic::Agent::FFI`
+
+            Note:
+            We also have new bindings for NewRelic.  This is exciting for NewRelic users in Perl
+            as the exiting bindings use a library which is no longer supported by NewRelic.
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            What about next year?
+
+            Note:
+            We did some pretty neat things in the last year, what about next year?
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Maybe write some *libclang* bindings using Platypus...
+
+            Note:
+            Maybe someone could write some libclang bindings...
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ...and write a code generator (**h2ffi**) that will reduce the tedius part of writing FFI bindings
+
+            Note:
+            and then we can write a code generator that can reduce the tedius part of writing FFI bindings:
+            writing function declerations.
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Maybe migrate some of your *XS* or *FFI* code to use an *Alien*...
+
+            Note:
+            Maybe you can migrate some of your XS or FFI code to use an Alien...
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ...and make life easier for your users
+
+            Note:
+            ...and make life easier for your users
           </textarea>
         </section>
 
@@ -349,7 +533,11 @@
             Please join us to see what we can accomplish in the next year
 
             * The *#native* chanel on *irc.perl.org*
-            * The *perlwasm* org on GitHub
+            * The *perlwasm* organization on GitHub
+
+            Note:
+            If you are interested in Alien and Platypus tech, please join us on the #native channel on IRC
+            or the perlwasm org on GitHub
           </textarea>
         </section>
 
