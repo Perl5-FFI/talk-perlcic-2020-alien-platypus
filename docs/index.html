@@ -84,6 +84,8 @@
             Note:
             The Build::Copy plugin for aliens that lack complicated compile and build steps, and just need
             to copy files into their share directory.
+
+            Alien::wasmtime uses this since wasmtime is distributed as Linux, macOS and Windows binary
           </textarea>
         </section>
 
@@ -103,6 +105,8 @@
              Note:
              The Vcpkg module and plugin make it easier to build Perl modules with
              external dependencies on Visual C++ Perl
+
+             This makes Platypus installs on Visual C++ Perl easy.
           </textarea>
         </section>
 
@@ -112,11 +116,10 @@
             larger set of open source packages that what is available to Strawberry Perl
 
             Note:
-            Although Strawberry Perl is the defacto standard Perl on Windows, it is currently very bad
+            Although Strawberry Perl is the defacto standard Perl on Windows, it is bad
             at handling external dependencies.  Even with advanced Alien technology it is a
-            challenge, so I think Vcpkg which provides a number of open source packages tailored
-            for the Visual C++ environment, coupled with a native build of Perl could give Strawberry
-            a run for its money.
+            challenge, and I think the vast array of Vcpkg packages coupled with Visual C++
+            Perl could give Strawberry a run for its money.
           </textarea>
         </section>
 
@@ -126,11 +129,9 @@
             on *irc.perl.org* &#127881;
 
             Note:
-            There has been a push among the folks on the #native channel on IRC
-            to fix and/or adopt older broken Alien modules.  So if you
-            own an Alien that is not currently working please take the time to review
-            these patches, put these modules up for adoption, 
-            or consider contacting us on IRC for more help.
+            The #native folks on IRC have pushed to fix and/or adopt older broken Alien
+            modules on CPAN.  If you own one of these, please review the patches, put
+            the modules up for adoption, or contact us on IRC for more help.
           </textarea>
         </section>
 
@@ -140,7 +141,7 @@
 
             Note:
             Platypus is a library for writing library bindings in Perl.
-            I think it is easier to learn and use than XS.
+            It is easier to learn and use than XS.
           </textarea>
         </section>
 
@@ -246,7 +247,7 @@
 
             1. define an enum
             2. define a function that takes an enum
-            3. and then by calling that function and having the strings automatically translated into their integer values
+            3. and then by calling that function.  The strings are translated to integer values for you.
           </textarea>
         </section>
 
@@ -255,7 +256,7 @@
             Platypus now has an interface for **Bundling** code from other
             languages
 
-            ```c [1-36|4-7|9-17|19-23|25-29|31-36]
+            ```c [1-36|4-7|9-17|19-29|31-36]
             #include "ffi_platypus_bundle.h"
             #include "string.h"
              
@@ -301,8 +302,7 @@
 
             1. define a struct to represent a class
             2. write a constructor for that class
-            3. along with
-            4. some methods
+            3. along with some methods
             5. and a destructor
           </textarea>
         </section>
@@ -336,7 +336,7 @@
             Now we can bind this interface to Perl by
 
             1. calling the bundle method which tells Platypus to use the C code that came with this dist
-            2. and defining the methods so they can be used in Perl.
+            2. and attaching the methods so they can be used in Perl.
           </textarea>
         </section>
 
@@ -344,16 +344,19 @@
           <textarea data-template>
             Define constants from C using the bundle interface
 
-            ```c [1-10|8|9]
+            ```c [1-13|11|12]
             #include "ffi_platypus_bundle.h"
+
+            #define FOO    "BAR"
+            #define ANSWER 42
 
             void
             ffi_pl_bundle_constant(
               const char *package,
               ffi_platypus_constant_t *c)
             {
-              set_str("FOO",     "BAR");
-              set_uint("ANSWER"  42);
+              set_str("FOO",     FOO);
+              set_uint("ANSWER", ANSWER);
             }
             ```
 
@@ -382,7 +385,7 @@
             ```
 
             Note:
-            Although not frequently used, Platypus now supports variadic functions like printf
+            Variadic functions like printf are supported.
 
             1. You can define a function using fixed and variable argument types
             2. and call it.
@@ -414,8 +417,8 @@
             Note:
             Platypus now supports passing records by value
 
-            1. this is the default when using version 1.
-            2. If you need to pass a record by reference you can append a star to indicate a pointer type.
+            1. This is the default when using api version 1.
+            2. A star indicates a pointer if you need pass-by-reference
           </textarea>
         </section>
 
@@ -446,8 +449,7 @@
             * Improved **FFI::Platypus::Lang::Rust** language plugin for *Rust*
 
             Note:
-            So another new thing we have is a new language plugin to make calling Go code easier,
-            and an improved Rust language plugin to make calling Rust code easier.
+            Go and Rust are easier to call with new and improved language plugins.
           </textarea>
         </section>
 
@@ -480,9 +482,8 @@
             no longer supported `NewRelic::Agent` and `NewRelic::Agent::FFI`
 
             Note:
-            We also have new bindings for NewRelic, which I decided to name NewFangle.
-            This is exciting for NewRelic users in Perl
-            as the existing bindings use a library which is no longer supported by NewRelic.
+            We also have new bindings for NewRelic.  Useful for NewRelic users in Perl,
+            since the older libraries are no longer supported.
           </textarea>
         </section>
 
@@ -491,7 +492,7 @@
             What about next year?
 
             Note:
-            We did some pretty neat things in the last year, what about next year?
+            What about next year?
           </textarea>
         </section>
 
@@ -509,8 +510,7 @@
             ...and write a code generator (**h2ffi**) that will reduce the tedius part of writing FFI bindings
 
             Note:
-            and then we can write a code generator that can reduce the tedius part of writing FFI bindings:
-            writing function declerations.
+            and we can write a code generator to make writing FFI bindings with lots of functions less tedius.
           </textarea>
         </section>
 
@@ -528,7 +528,7 @@
             ...and make life easier for your users
 
             Note:
-            ...and make life easier for your users
+            ...and make it easier for your users to install
           </textarea>
         </section>
 
